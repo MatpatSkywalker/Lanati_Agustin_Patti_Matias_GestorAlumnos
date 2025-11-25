@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Legajo": "021",
+    "Apellido": "Fernandez",
+    "Nombres": "Sofia",
+    "NumeroDocumento": "99887766",
+    "Email": "sofia.fernandez@uai.edu.ar",
+    "Telefono": "1122334455"
+  },
+  {
+    "Legajo": "022",
+    "Apellido": "Gonzalez",
+    "Nombres": "Lucas",
+    "NumeroDocumento": "88776655",
+    "Email": "lucas.gonzalez@uai.edu.ar",
+    "Telefono": "1133445566"
+  },
+  {
+    "Legajo": "023",
+    "Apellido": "Fernandez",
+    "Nombres": "Martin",
+    "NumeroDocumento": "77665544",
+    "Email": "martin.fernandez@uai.edu.ar",
+    "Telefono": "1144556677"
+  }
+]

@@ -8,21 +8,40 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
     {
         public enum Formato { TXT, CSV, JSON, XML }
 
+        // --- MÉTODOS DEL MENÚ ---
         public void CrearNuevoArchivo()
         {
             Console.Clear();
             Console.WriteLine("=== CREAR NUEVO ARCHIVO ===");
-            Console.Write("Nombre del archivo (sin extensión): ");
-            string nombre = Console.ReadLine() ?? "alumnos";
+
+            // VALIDACIÓN 1: Nombre del archivo no puede estar vacío
+            string nombre = "";
+            do
+            {
+                Console.Write("Nombre del archivo (sin extensión): ");
+                nombre = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(nombre))
+                {
+                    Console.WriteLine(" Error: El nombre del archivo no puede estar vacío. Intente nuevamente.");
+                }
+            } while (string.IsNullOrWhiteSpace(nombre));
 
             Console.WriteLine("Formato: 1.TXT 2.CSV 3.JSON 4.XML");
             Formato formato = ObtenerFormato(Console.ReadLine());
 
             List<Alumno> alumnos = IngresarAlumnos();
-            string path = $"{nombre}.{formato.ToString().ToLower()}";
 
+            // Si por alguna razón la lista vuelve vacía (ej: canceló), no creamos nada
+            if (alumnos.Count == 0)
+            {
+                Console.WriteLine("No se ingresaron alumnos. Operación cancelada.");
+                Pausar();
+                return;
+            }
+
+            string path = $"{nombre}.{formato.ToString().ToLower()}";
             GuardarArchivo(path, alumnos, formato);
-            Console.WriteLine($"\nArchivo creado en: {Path.GetFullPath(path)}");
+            Console.WriteLine($"\n Archivo creado exitosamente en: {Path.GetFullPath(path)}");
             Pausar();
         }
 
@@ -33,14 +52,19 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             Console.Write("Nombre completo (ej: alumnos.csv): ");
             string path = Console.ReadLine();
 
-            if (!File.Exists(path)) { Console.WriteLine("El archivo no existe."); Pausar(); return; }
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            {
+                Console.WriteLine(" El archivo no existe o el nombre es inválido.");
+                Pausar();
+                return;
+            }
 
             try
             {
                 List<Alumno> alumnos = CargarAlumnos(path);
                 MostrarTabla(alumnos);
             }
-            catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+            catch (Exception ex) { Console.WriteLine($"Error crítico: {ex.Message}"); }
             Pausar();
         }
 
@@ -51,7 +75,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             Console.Write("Nombre archivo a modificar: ");
             string path = Console.ReadLine();
 
-            if (!File.Exists(path)) { Console.WriteLine("Archivo no encontrado."); Pausar(); return; }
+            if (!File.Exists(path)) { Console.WriteLine("❌ Archivo no encontrado."); Pausar(); return; }
 
             List<Alumno> alumnos = CargarAlumnos(path);
             bool guardar = false;
@@ -84,7 +108,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 string ext = Path.GetExtension(path).TrimStart('.').ToUpper();
                 Formato fmt = Enum.Parse<Formato>(ext);
                 GuardarArchivo(path, alumnos, fmt);
-                Console.WriteLine("Guardado correctamente.");
+                Console.WriteLine("✅ Cambios guardados correctamente.");
                 Pausar();
             }
         }
@@ -103,12 +127,14 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 if (Console.ReadLine()?.ToUpper() == "CONFIRMAR")
                 {
                     File.Delete(path);
-                    Console.WriteLine("Eliminado.");
+                    Console.WriteLine("🗑️ Archivo eliminado.");
                 }
             }
-            else Console.WriteLine("No existe.");
+            else Console.WriteLine("❌ El archivo no existe.");
             Pausar();
         }
+
+        // --- MÉTODOS CORE ---
 
         public List<Alumno> CargarAlumnos(string path)
         {
@@ -146,20 +172,25 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             File.WriteAllText(path, contenido);
         }
 
-        // Lógica privada
+        // --- LÓGICA PRIVADA ---
+
         private void AgregarAlumnoLogica(List<Alumno> alumnos)
         {
             var nuevos = IngresarAlumnos(1);
-            if (alumnos.Any(a => a.Legajo == nuevos[0].Legajo)) Console.WriteLine("¡Legajo existente!");
-            else alumnos.AddRange(nuevos);
+            if (nuevos.Count > 0)
+            {
+                if (alumnos.Any(a => a.Legajo == nuevos[0].Legajo)) Console.WriteLine("⚠️ ¡Ese Legajo ya existe!");
+                else alumnos.AddRange(nuevos);
+            }
         }
 
         private void ModificarAlumnoLogica(List<Alumno> alumnos)
         {
             Console.Write("Legajo a modificar: ");
             var alu = alumnos.FirstOrDefault(a => a.Legajo == Console.ReadLine());
-            if (alu == null) { Console.WriteLine("No encontrado."); Pausar(); return; }
-            Console.WriteLine("Enter para mantener valor actual.");
+            if (alu == null) { Console.WriteLine("❌ Alumno no encontrado."); Pausar(); return; }
+
+            Console.WriteLine("ℹ️  Presione Enter para mantener el valor actual.");
             alu.Apellido = EditarCampo("Apellido", alu.Apellido);
             alu.Nombres = EditarCampo("Nombres", alu.Nombres);
             alu.NumeroDocumento = EditarCampo("Documento", alu.NumeroDocumento);
@@ -176,12 +207,32 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 Console.Write($"Eliminar a {alu.Apellido}? (SI): ");
                 if (Console.ReadLine()?.ToUpper() == "SI") alumnos.Remove(alu);
             }
+            else
+            {
+                Console.WriteLine("❌ No encontrado.");
+            }
         }
 
         private List<Alumno> IngresarAlumnos(int cantidad = -1)
         {
             List<Alumno> lista = new List<Alumno>();
-            if (cantidad == -1) { Console.Write("Cantidad: "); int.TryParse(Console.ReadLine(), out cantidad); }
+
+            // VALIDACIÓN 2: Cantidad de alumnos debe ser número válido > 0
+            if (cantidad == -1)
+            {
+                string inputCant;
+                do
+                {
+                    Console.Write("Cantidad de alumnos a registrar: ");
+                    inputCant = Console.ReadLine();
+                    if (!int.TryParse(inputCant, out cantidad) || cantidad <= 0)
+                    {
+                        Console.WriteLine("⚠️ Error: Debe ingresar un número mayor a 0.");
+                        cantidad = -1; // reset para seguir en el bucle
+                    }
+                } while (cantidad <= 0);
+            }
+
             for (int i = 0; i < cantidad; i++)
             {
                 Console.WriteLine($"\n--- Alumno {i + 1} ---");
@@ -198,30 +249,58 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             return lista;
         }
 
+        // VALIDACIÓN 3: El dato no puede ser vacío
         private string PedirDato(string campo, bool esEmail = false)
         {
             string val;
             do
             {
-                Console.Write($"{campo}: "); val = Console.ReadLine();
-                if (esEmail && !string.IsNullOrEmpty(val) && !val.Contains("@")) val = "";
+                Console.Write($"{campo}: ");
+                val = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(val))
+                {
+                    Console.WriteLine($"⚠️ El campo '{campo}' no puede estar vacío. Intente nuevamente.");
+                }
+                else if (esEmail && !val.Contains("@"))
+                {
+                    Console.WriteLine("⚠️ El email debe contener un '@'.");
+                    val = ""; // Forzar repetición
+                }
             } while (string.IsNullOrWhiteSpace(val));
             return val;
         }
 
-        private string EditarCampo(string n, string v) { Console.Write($"{n} ({v}): "); string i = Console.ReadLine(); return string.IsNullOrEmpty(i) ? v : i; }
+        private string EditarCampo(string n, string v)
+        {
+            Console.Write($"{n} ({v}): ");
+            string i = Console.ReadLine();
+            // En editar permitimos vacío porque significa "no cambiar"
+            return string.IsNullOrEmpty(i) ? v : i;
+        }
 
         private List<Alumno> ParseCSV(string c) => c.Split('\n', StringSplitOptions.RemoveEmptyEntries).Skip(1).Select(l => l.Trim().Split(',')).Where(p => p.Length >= 6).Select(p => new Alumno { Legajo = p[0], Apellido = p[1], Nombres = p[2], NumeroDocumento = p[3], Email = p[4], Telefono = p[5] }).ToList();
         private List<Alumno> ParseTXT(string c) => c.Split('\n', StringSplitOptions.RemoveEmptyEntries).Select(l => l.Trim().Split('|')).Where(p => p.Length >= 6).Select(p => new Alumno { Legajo = p[0], Apellido = p[1], Nombres = p[2], NumeroDocumento = p[3], Email = p[4], Telefono = p[5] }).ToList();
 
         private void MostrarTabla(List<Alumno> alumnos)
         {
-            Console.WriteLine(new string('=', 100));
-            Console.WriteLine($"| {"Legajo",-10} | {"Apellido",-15} | {"Nombres",-20} | {"Email",-25} |");
-            Console.WriteLine(new string('=', 100));
-            foreach (var a in alumnos) Console.WriteLine($"| {a.Legajo,-10} | {a.Apellido,-15} | {a.Nombres,-20} | {a.Email.PadRight(25).Substring(0, 25)} |");
+            string linea = new string('=', 110);
+            Console.WriteLine(linea);
+            Console.WriteLine("| " + "Legajo".PadRight(10) + " | " + "Apellido".PadRight(15) + " | " + "Nombres".PadRight(20) + " | " + "Email".PadRight(30) + " | " + "Teléfono".PadRight(15) + " |");
+            Console.WriteLine(linea);
+
+            foreach (var a in alumnos)
+            {
+                string leg = a.Legajo.PadRight(10);
+                string ape = a.Apellido.Length > 15 ? a.Apellido.Substring(0, 15) : a.Apellido.PadRight(15);
+                string nom = a.Nombres.Length > 20 ? a.Nombres.Substring(0, 20) : a.Nombres.PadRight(20);
+                string mail = a.Email.Length > 30 ? a.Email.Substring(0, 30) : a.Email.PadRight(30);
+                string tel = a.Telefono.PadRight(15);
+                Console.WriteLine($"| {leg} | {ape} | {nom} | {mail} | {tel} |");
+            }
             Console.WriteLine($"Total: {alumnos.Count}");
         }
+
         public Formato ObtenerFormato(string op) => op switch { "2" => Formato.CSV, "3" => Formato.JSON, "4" => Formato.XML, _ => Formato.TXT };
         private void Pausar() { Console.WriteLine("\nTecla para continuar..."); Console.ReadKey(); }
     }

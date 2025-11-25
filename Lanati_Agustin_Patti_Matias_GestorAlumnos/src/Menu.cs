@@ -1,4 +1,6 @@
-﻿namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
+﻿using System;
+
+namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 {
     public class Menu
     {
@@ -33,10 +35,22 @@
                         case "4": gestor.EliminarArchivoFisico(); break;
                         case "5": conversor.ConvertirFormato(); break;
                         case "6": reportes.GenerarReporte(); break;
-                        case "0": break;
+                        case "0":
+                            Console.WriteLine("Saliendo...");
+                            break;
+                        default:
+                            // ESTO ES LO NUEVO:
+                            Console.WriteLine("\nOpción incorrecta. Pruebe de nuevo.");
+                            Console.WriteLine("Presione una tecla para continuar...");
+                            Console.ReadKey();
+                            break;
                     }
                 }
-                catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); Console.ReadKey(); }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error inesperado: {ex.Message}");
+                    Console.ReadKey();
+                }
             } while (op != "0");
         }
     }
