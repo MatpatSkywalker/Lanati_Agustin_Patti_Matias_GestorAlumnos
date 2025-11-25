@@ -19,11 +19,10 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             {
                 Console.Write("Nombre del archivo (sin extensión): ");
                 nombre = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(nombre)) Console.WriteLine(" Error: El nombre no puede estar vacío.");
+                if (string.IsNullOrWhiteSpace(nombre)) Console.WriteLine("⚠️ Error: El nombre no puede estar vacío.");
             } while (string.IsNullOrWhiteSpace(nombre));
 
-            Console.WriteLine("Formato: 1.TXT 2.CSV 3.JSON 4.XML");
-            Formato formato = ObtenerFormato(Console.ReadLine());
+            Formato formato = PedirFormato();
 
             List<Alumno> alumnos = IngresarAlumnos(new List<Alumno>());
 
@@ -80,8 +79,8 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 Console.Clear();
                 Console.WriteLine($"Editando: {path} ({alumnos.Count} registros)");
                 Console.WriteLine("1. Agregar alumno");
-                Console.WriteLine("2. Modificar alumno");
-                Console.WriteLine("3. Eliminar alumno");
+                Console.WriteLine("2. Modificar alumno (por legajo)");
+                Console.WriteLine("3. Eliminar alumno (por legajo)");
                 Console.WriteLine("4. Guardar y salir");
                 Console.WriteLine("5. Cancelar");
                 Console.Write("Opción: ");
@@ -131,6 +130,25 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 
         // --- MÉTODOS CORE ---
 
+        // ESTE ES EL MÉTODO QUE USA EL CONVERSOR PARA NO ROMPERSE
+        public Formato PedirFormato()
+        {
+            string op;
+            do
+            {
+                Console.WriteLine("Seleccione Formato: 1.TXT 2.CSV 3.JSON 4.XML");
+                Console.Write("Opción: ");
+                op = Console.ReadLine();
+
+                if (op != "1" && op != "2" && op != "3" && op != "4")
+                {
+                    Console.WriteLine(" Opción inválida. Ingrese un número del 1 al 4.");
+                }
+            } while (op != "1" && op != "2" && op != "3" && op != "4");
+
+            return op switch { "2" => Formato.CSV, "3" => Formato.JSON, "4" => Formato.XML, _ => Formato.TXT };
+        }
+
         public List<Alumno> CargarAlumnos(string path)
         {
             string contenido = File.ReadAllText(path);
@@ -172,10 +190,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
         private void AgregarAlumnoLogica(List<Alumno> alumnosExistentes)
         {
             var nuevos = IngresarAlumnos(alumnosExistentes, 1);
-            if (nuevos.Count > 0)
-            {
-                alumnosExistentes.AddRange(nuevos);
-            }
+            if (nuevos.Count > 0) alumnosExistentes.AddRange(nuevos);
         }
 
         private void ModificarAlumnoLogica(List<Alumno> alumnos)
@@ -185,11 +200,13 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             if (alu == null) { Console.WriteLine(" Alumno no encontrado."); Pausar(); return; }
 
             Console.WriteLine("  Enter para mantener valor actual.");
-            alu.Apellido = EditarCampo("Apellido", alu.Apellido);
-            alu.Nombres = EditarCampo("Nombres", alu.Nombres);
-            alu.NumeroDocumento = EditarCampo("Documento", alu.NumeroDocumento);
-            alu.Email = EditarCampo("Email", alu.Email);
-            alu.Telefono = EditarCampo("Teléfono", alu.Telefono);
+
+            // AQUÍ SE USA LA NUEVA EDICIÓN VALIDADA
+            alu.Apellido = EditarDatoValidado("Apellido", alu.Apellido);
+            alu.Nombres = EditarDatoValidado("Nombres", alu.Nombres);
+            alu.NumeroDocumento = EditarDatoValidado("Documento", alu.NumeroDocumento);
+            alu.Email = EditarDatoValidado("Email", alu.Email, true); // Valida formato email
+            alu.Telefono = EditarDatoValidado("Teléfono", alu.Telefono);
         }
 
         private void EliminarAlumnoLogica(List<Alumno> alumnos)
@@ -203,8 +220,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             }
             else Console.WriteLine(" No encontrado.");
         }
-
-        // --- VALIDACIONES DE INGRESO ---
 
         private List<Alumno> IngresarAlumnos(List<Alumno> alumnosExistentes, int cantidad = -1)
         {
@@ -230,7 +245,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 Console.WriteLine($"\n--- Alumno {i + 1} ---");
                 Alumno a = new Alumno();
 
-                // 1. Validar LEGAJO único
                 do
                 {
                     string input = PedirDato("Legajo");
@@ -245,7 +259,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 a.Apellido = PedirDato("Apellido");
                 a.Nombres = PedirDato("Nombres");
 
-                // 2. Validar DOCUMENTO (DNI) único (AGREGADO NUEVO)
                 do
                 {
                     string input = PedirDato("Documento");
@@ -257,7 +270,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                     else a.NumeroDocumento = input;
                 } while (string.IsNullOrEmpty(a.NumeroDocumento));
 
-                // 3. Validar EMAIL único y formato
                 do
                 {
                     string input = PedirDato("Email", true);
@@ -269,7 +281,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                     else a.Email = input;
                 } while (string.IsNullOrEmpty(a.Email));
 
-                // 4. Validar TELÉFONO único
                 do
                 {
                     string input = PedirDato("Teléfono");
@@ -298,32 +309,47 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             {
                 Console.Write($"{campo}: ");
                 val = Console.ReadLine();
-
                 if (string.IsNullOrWhiteSpace(val))
                 {
                     Console.WriteLine($" El campo '{campo}' no puede estar vacío.");
                 }
                 else if (esEmail)
                 {
-                    // VALIDACIÓN MEJORADA DE EMAIL: Debe tener @ y .
                     if (!val.Contains("@") || !val.Contains("."))
                     {
-                        Console.WriteLine(" Formato incorrecto. Debe contener '@' y un punto (ej: usuario@dominio.com).");
-                        val = ""; // Forzar a repetir el bucle
+                        Console.WriteLine(" Formato incorrecto. Debe contener '@' y un punto.");
+                        val = "";
                     }
                 }
             } while (string.IsNullOrWhiteSpace(val));
             return val;
         }
 
-        private string EditarCampo(string n, string v)
+        // NUEVO MÉTODO PARA EDITAR CON VALIDACIÓN DE FORMATO
+        private string EditarDatoValidado(string nombre, string valorActual, bool esEmail = false)
         {
-            Console.Write($"{n} ({v}): ");
-            string i = Console.ReadLine();
-            return string.IsNullOrEmpty(i) ? v : i;
-        }
+            while (true)
+            {
+                Console.Write($"{nombre} ({valorActual}): ");
+                string input = Console.ReadLine();
 
-        // --- PARSEO ---
+                // Si está vacío, devuelve el valor viejo (no cambia)
+                if (string.IsNullOrEmpty(input)) return valorActual;
+
+                // Si escribió algo, validamos formato si es email
+                if (esEmail)
+                {
+                    if (!input.Contains("@") || !input.Contains("."))
+                    {
+                        Console.WriteLine(" Formato de email inválido (debe tener @ y .). Intente de nuevo.");
+                        continue; // Vuelve a pedir
+                    }
+                }
+
+                // Si pasa las validaciones, devuelve el nuevo valor
+                return input;
+            }
+        }
 
         private List<Alumno> ParseCSV(string c)
         {
@@ -378,8 +404,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             }
             Console.WriteLine($"Total: {alumnos.Count}");
         }
-
-        public Formato ObtenerFormato(string op) => op switch { "2" => Formato.CSV, "3" => Formato.JSON, "4" => Formato.XML, _ => Formato.TXT };
         private void Pausar() { Console.WriteLine("\nTecla para continuar..."); Console.ReadKey(); }
     }
 }

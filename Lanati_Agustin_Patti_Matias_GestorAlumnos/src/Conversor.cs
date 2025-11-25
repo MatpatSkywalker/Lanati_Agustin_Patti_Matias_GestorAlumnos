@@ -18,14 +18,17 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             try
             {
                 var alumnos = _gestor.CargarAlumnos(origen);
-                Console.WriteLine("Destino: 1.TXT 2.CSV 3.JSON 4.XML");
-                GestorArchivos.Formato fmt = _gestor.ObtenerFormato(Console.ReadLine());
+
+                Console.WriteLine("\nSeleccione el formato de DESTINO:");
+                // AQUÍ ESTABA EL ERROR, AHORA USA EL MÉTODO SEGURO:
+                GestorArchivos.Formato fmt = _gestor.PedirFormato();
+
                 Console.Write("Nombre destino (sin extensión): ");
                 string nombre = Console.ReadLine();
                 string path = $"{nombre}.{fmt.ToString().ToLower()}";
 
                 _gestor.GuardarArchivo(path, alumnos, fmt);
-                Console.WriteLine($"\n✓ Conversión exitosa a {path}");
+                Console.WriteLine($"\n Conversión exitosa a {path}");
             }
             catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
             Console.ReadKey();

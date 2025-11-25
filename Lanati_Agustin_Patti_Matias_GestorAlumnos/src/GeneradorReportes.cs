@@ -15,14 +15,13 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 
             if (!File.Exists(path)) { Console.WriteLine("No existe."); Console.ReadKey(); return; }
 
-            // 1. y 2. Uso explícito de LINQ OrderBy y GroupBy [cite: 219, 220]
+            // Uso explícito de LINQ OrderBy y GroupBy
             var alumnos = _gestor.CargarAlumnos(path);
             var grupos = alumnos.OrderBy(a => a.Apellido)
                                 .GroupBy(a => a.Apellido);
 
             StringWriter sw = new StringWriter();
 
-            // Título centrado usando PadLeft para simular centrado básico o simple PadRight para relleno
             sw.WriteLine("REPORTE DE ALUMNOS POR APELLIDO".PadRight(50));
             sw.WriteLine($"Fecha: {DateTime.Now}");
             sw.WriteLine(new string('=', 60));
@@ -36,17 +35,15 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 
                 foreach (var alu in grupo)
                 {
-                    // 4. Uso de PadRight para alinear las etiquetas "Labels" [cite: 222]
-                    // Así los valores (Legajo, Nombre, etc.) comienzan todos en la misma columna visual.
+                    // Alineación con PadRight
                     sw.WriteLine("Legajo:".PadRight(20) + alu.Legajo);
                     sw.WriteLine("Nombres:".PadRight(20) + alu.Nombres);
                     sw.WriteLine("Documento:".PadRight(20) + alu.NumeroDocumento);
                     sw.WriteLine("Email:".PadRight(20) + alu.Email);
                     sw.WriteLine("Teléfono:".PadRight(20) + alu.Telefono);
-                    sw.WriteLine(""); // Espacio entre alumnos
+                    sw.WriteLine("");
                 }
 
-                // 3. Uso de Count() para contar registros por grupo [cite: 221]
                 int subtotal = grupo.Count();
                 sw.WriteLine($"→ Subtotal {grupo.Key.ToUpper()}: {subtotal} alumno(s)");
                 sw.WriteLine(new string('-', 60));
@@ -56,19 +53,40 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             }
 
             sw.WriteLine(new string('=', 60));
-            // Ejemplo de uso de PadLeft para el número final
             sw.WriteLine("Total Alumnos Registrados: " + totalGeneral.ToString().PadLeft(5));
             sw.WriteLine(new string('=', 60));
 
             string reporte = sw.ToString();
             Console.WriteLine(reporte);
 
-            Console.Write("Guardar reporte? (S/N): ");
-            if (Console.ReadLine()?.ToUpper() == "S")
+            // --- VALIDACIÓN DE GUARDADO (S/N) ---
+            string opcion = "";
+            do
             {
-                File.WriteAllText($"Reporte_{DateTime.Now:yyyyMMdd_HHmm}.txt", reporte);
-                Console.WriteLine("Reporte guardado.");
+                Console.Write("\n¿Desea guardar el reporte? (S/N): ");
+                // Leemos, pasamos a mayúscula y quitamos espacios por las dudas
+                opcion = Console.ReadLine()?.ToUpper().Trim();
+
+                if (opcion != "S" && opcion != "N")
+                {
+                    Console.WriteLine(" Opción inválida. Por favor ingrese 'S' para Sí o 'N' para No.");
+                }
+
+            } while (opcion != "S" && opcion != "N");
+
+            // Ejecutamos la acción según la respuesta válida
+            if (opcion == "S")
+            {
+                string nombreReporte = $"Reporte_{DateTime.Now:yyyyMMdd_HHmm}.txt";
+                File.WriteAllText(nombreReporte, reporte);
+                Console.WriteLine($" Reporte guardado exitosamente como: {nombreReporte}");
             }
+            else
+            {
+                Console.WriteLine(" No se guardó el reporte.");
+            }
+
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
     }
