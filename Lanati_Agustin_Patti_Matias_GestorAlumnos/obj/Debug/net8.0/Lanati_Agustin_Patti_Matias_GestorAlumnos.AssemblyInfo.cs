@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lanati_Agustin_Patti_Matias_GestorAlumnos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e44da5c5f7b50dbf948089ce2a2a08bb3bbc64d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9b6937c8ce396f1d18ebca0ad2ef366e3328c12")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lanati_Agustin_Patti_Matias_GestorAlumnos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lanati_Agustin_Patti_Matias_GestorAlumnos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

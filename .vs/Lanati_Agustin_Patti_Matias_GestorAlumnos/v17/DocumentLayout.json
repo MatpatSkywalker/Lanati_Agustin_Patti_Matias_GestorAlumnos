@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|a:\\solutions\\lanati_agustin_patti_matias_gestoralumnos\\lanati_agustin_patti_matias_gestoralumnos\\src\\gestorarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|solutionrelative:lanati_agustin_patti_matias_gestoralumnos\\src\\gestorarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|a:\\solutions\\lanati_agustin_patti_matias_gestoralumnos\\lanati_agustin_patti_matias_gestoralumnos\\src\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|solutionrelative:lanati_agustin_patti_matias_gestoralumnos\\src\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|a:\\solutions\\lanati_agustin_patti_matias_gestoralumnos\\lanati_agustin_patti_matias_gestoralumnos\\src\\generadorreportes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|solutionrelative:lanati_agustin_patti_matias_gestoralumnos\\src\\generadorreportes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|a:\\solutions\\lanati_agustin_patti_matias_gestoralumnos\\lanati_agustin_patti_matias_gestoralumnos\\src\\gestorarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7238CBCB-ADDA-4393-B7A4-943FDA22D124}|Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos.csproj|solutionrelative:lanati_agustin_patti_matias_gestoralumnos\\src\\gestorarchivos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,39 +30,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "GestorArchivos.cs",
               "DocumentMoniker": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
               "RelativeDocumentMoniker": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
               "ToolTip": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAGcBAAAAAAAAAAAAADYBAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T22:42:38.357Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "GeneradorReportes.cs",
               "DocumentMoniker": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GeneradorReportes.cs",
               "RelativeDocumentMoniker": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GeneradorReportes.cs",
               "ToolTip": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GeneradorReportes.cs",
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GeneradorReportes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAgwBEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T22:34:43.049Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Menu.cs",
               "DocumentMoniker": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Menu.cs",
               "RelativeDocumentMoniker": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Menu.cs",
               "ToolTip": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Menu.cs",
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Menu.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwDgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T18:49:19.478Z",
               "EditorCaption": ""
