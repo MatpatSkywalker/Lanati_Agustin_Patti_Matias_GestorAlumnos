@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Lanati_Agustin_Patti_Matias_GestorAlumnos/1.0.0": {
+        "runtime": {
+          "Lanati_Agustin_Patti_Matias_GestorAlumnos.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Lanati_Agustin_Patti_Matias_GestorAlumnos/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

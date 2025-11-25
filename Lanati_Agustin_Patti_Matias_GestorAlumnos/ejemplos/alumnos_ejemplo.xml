@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Alumnos>
+	<Alumno>
+		<Legajo>031</Legajo>
+		<Apellido>Diaz</Apellido>
+		<Nombres>Valentina</Nombres>
+		<NumeroDocumento>12312312</NumeroDocumento>
+		<Email>valentina.diaz@uai.edu.ar</Email>
+		<Telefono>1100110011</Telefono>
+	</Alumno>
+	<Alumno>
+		<Legajo>032</Legajo>
+		<Apellido>Romero</Apellido>
+		<Nombres>Facundo</Nombres>
+		<NumeroDocumento>32132132</NumeroDocumento>
+		<Email>facundo.romero@uai.edu.ar</Email>
+		<Telefono>1199887766</Telefono>
+	</Alumno>
+</Alumnos>
