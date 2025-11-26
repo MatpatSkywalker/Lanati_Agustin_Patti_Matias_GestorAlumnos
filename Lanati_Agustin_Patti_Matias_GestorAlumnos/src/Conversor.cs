@@ -28,7 +28,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 string path = $"{nombre}.{fmt.ToString().ToLower()}";
 
                 _gestor.GuardarArchivo(path, alumnos, fmt);
-                Console.WriteLine($"\n Conversión exitosa a {path}");
+                Console.WriteLine($" Conversión exitosa a {path}");
             }
             catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
             Console.ReadKey();
