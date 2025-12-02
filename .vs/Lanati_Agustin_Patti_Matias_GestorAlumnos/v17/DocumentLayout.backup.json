@@ -29,6 +29,10 @@
           "SelectedChildIndex": 2,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Conversor.cs",
@@ -36,14 +40,10 @@
               "RelativeDocumentMoniker": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Conversor.cs",
               "ToolTip": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Conversor.cs",
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Conversor.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwB4AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T23:44:08.643Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
@@ -53,7 +53,7 @@
               "RelativeDocumentMoniker": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
               "ToolTip": "A:\\Solutions\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GestorArchivos.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAqwFIAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAH0BAAAAAAAAAAA1wFIBAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T22:42:38.357Z",
               "EditorCaption": ""
@@ -68,8 +68,7 @@
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\GeneradorReportes.cs",
               "ViewState": "AgIAADoAAAAAAAAAAAAgwFUAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T22:34:43.049Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T22:34:43.049Z"
             },
             {
               "$type": "Document",
@@ -81,8 +80,7 @@
               "RelativeToolTip": "Lanati_Agustin_Patti_Matias_GestorAlumnos\\src\\Menu.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAgwDgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T18:49:19.478Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T18:49:19.478Z"
             }
           ]
         }

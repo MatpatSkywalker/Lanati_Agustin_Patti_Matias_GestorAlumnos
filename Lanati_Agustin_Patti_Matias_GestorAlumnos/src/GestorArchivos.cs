@@ -19,7 +19,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             {
                 Console.Write("Nombre del archivo (sin extensión): ");
                 nombre = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(nombre)) Console.WriteLine("⚠️ Error: El nombre no puede estar vacío.");
+                if (string.IsNullOrWhiteSpace(nombre)) Console.WriteLine(" Error: El nombre no puede estar vacío.");
             } while (string.IsNullOrWhiteSpace(nombre));
 
             Formato formato = PedirFormato();
@@ -35,7 +35,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 
             string path = $"{nombre}.{formato.ToString().ToLower()}";
             GuardarArchivo(path, alumnos, formato);
-            Console.WriteLine($"\n Archivo creado exitosamente en: {Path.GetFullPath(path)}");
+            Console.WriteLine($"\n✅ Archivo creado exitosamente en: {Path.GetFullPath(path)}");
             Pausar();
         }
 
@@ -79,8 +79,8 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 Console.Clear();
                 Console.WriteLine($"Editando: {path} ({alumnos.Count} registros)");
                 Console.WriteLine("1. Agregar alumno");
-                Console.WriteLine("2. Modificar alumno (por legajo)");
-                Console.WriteLine("3. Eliminar alumno (por legajo)");
+                Console.WriteLine("2. Modificar alumno");
+                Console.WriteLine("3. Eliminar alumno");
                 Console.WriteLine("4. Guardar y salir");
                 Console.WriteLine("5. Cancelar");
                 Console.Write("Opción: ");
@@ -121,7 +121,7 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 if (Console.ReadLine()?.ToUpper() == "CONFIRMAR")
                 {
                     File.Delete(path);
-                    Console.WriteLine(" Archivo eliminado.");
+                    Console.WriteLine("Archivo eliminado.");
                 }
             }
             else Console.WriteLine(" El archivo no existe.");
@@ -130,7 +130,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 
         // --- MÉTODOS CORE ---
 
-        // ESTE ES EL MÉTODO QUE USA EL CONVERSOR PARA NO ROMPERSE
         public Formato PedirFormato()
         {
             string op;
@@ -201,11 +200,10 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
 
             Console.WriteLine("  Enter para mantener valor actual.");
 
-            // AQUÍ SE USA LA NUEVA EDICIÓN VALIDADA
             alu.Apellido = EditarDatoValidado("Apellido", alu.Apellido);
             alu.Nombres = EditarDatoValidado("Nombres", alu.Nombres);
             alu.NumeroDocumento = EditarDatoValidado("Documento", alu.NumeroDocumento);
-            alu.Email = EditarDatoValidado("Email", alu.Email, true); // Valida formato email
+            alu.Email = EditarDatoValidado("Email", alu.Email, true);
             alu.Telefono = EditarDatoValidado("Teléfono", alu.Telefono);
         }
 
@@ -325,7 +323,6 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
             return val;
         }
 
-        // NUEVO MÉTODO PARA EDITAR CON VALIDACIÓN DE FORMATO
         private string EditarDatoValidado(string nombre, string valorActual, bool esEmail = false)
         {
             while (true)
@@ -333,20 +330,17 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                 Console.Write($"{nombre} ({valorActual}): ");
                 string input = Console.ReadLine();
 
-                // Si está vacío, devuelve el valor viejo (no cambia)
                 if (string.IsNullOrEmpty(input)) return valorActual;
 
-                // Si escribió algo, validamos formato si es email
                 if (esEmail)
                 {
                     if (!input.Contains("@") || !input.Contains("."))
                     {
                         Console.WriteLine(" Formato de email inválido (debe tener @ y .). Intente de nuevo.");
-                        continue; // Vuelve a pedir
+                        continue;
                     }
                 }
 
-                // Si pasa las validaciones, devuelve el nuevo valor
                 return input;
             }
         }
@@ -384,23 +378,33 @@ namespace Lanati_Agustin_Patti_Matias_GestorAlumnos.src
                     }).ToList();
         }
 
+        // MÉTODO MOSTRARTABLA ACTUALIZADO PARA INCLUIR DOCUMENTO (DNI)
         private void MostrarTabla(List<Alumno> alumnos)
         {
-            string linea = new string('=', 110);
+            // Ajuste de ancho de línea para que quepa la nueva columna
+            string linea = new string('=', 115);
             Console.WriteLine(linea);
-            Console.WriteLine("| " + "Legajo".PadRight(10) + " | " + "Apellido".PadRight(15) + " | " + "Nombres".PadRight(20) + " | " + "Email".PadRight(30) + " | " + "Teléfono".PadRight(15) + " |");
+            // Cabecera: Legajo(10) | Apellido(15) | Nombres(15) | Documento(12) | Email(30) | Teléfono(15) |
+            Console.WriteLine("| " + "Legajo".PadRight(10) + " | " + "Apellido".PadRight(15) + " | " + "Nombres".PadRight(15) + " | " + "Documento".PadRight(12) + " | " + "Email".PadRight(30) + " | " + "Teléfono".PadRight(15) + " |");
             Console.WriteLine(linea);
 
             foreach (var a in alumnos)
             {
                 string leg = a.Legajo.PadRight(10);
                 string ape = a.Apellido.Length > 15 ? a.Apellido.Substring(0, 15) : a.Apellido.PadRight(15);
-                string nom = a.Nombres.Length > 20 ? a.Nombres.Substring(0, 20) : a.Nombres.PadRight(20);
+                // Nombres ajustado de 20 a 15 de ancho
+                string nom = a.Nombres.Length > 15 ? a.Nombres.Substring(0, 15) : a.Nombres.PadRight(15);
+
+                // NUEVO CAMPO: Documento
+                string docRaw = a.NumeroDocumento ?? "";
+                string doc = docRaw.Length > 12 ? docRaw.Substring(0, 12) : docRaw.PadRight(12);
+
                 string mail = a.Email.Length > 30 ? a.Email.Substring(0, 30) : a.Email.PadRight(30);
                 string telRaw = a.Telefono ?? "";
                 string tel = telRaw.Length > 15 ? telRaw.Substring(0, 15) : telRaw.PadRight(15);
 
-                Console.WriteLine($"| {leg} | {ape} | {nom} | {mail} | {tel} |");
+                // Imprimir la fila con el Documento
+                Console.WriteLine($"| {leg} | {ape} | {nom} | {doc} | {mail} | {tel} |");
             }
             Console.WriteLine($"Total: {alumnos.Count}");
         }
